@@ -2,7 +2,7 @@ import Axios from './axios';
 
 const Service = {
   // 登录接口
-  loginUser: data => Axios.post('/api/user/signin', data),
+  loginUser: data => Axios.post('/api/auth/login', data),
   // 注册接口
   RegisterUser: data => Axios.post('/api/user/signup', data),
   // 获取当前房间所有历史记录

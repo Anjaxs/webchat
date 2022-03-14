@@ -16,7 +16,7 @@ module.exports = {
     assetsDir: './static/',
     publicPath: process.env.CDN ? '//s3.qiufengh.com/webchat' : '',
     devServer: {
-      port: 9099,
+      port: 8001,
       proxy: { // https://cli.vuejs.org/zh/config/#devserver-proxy
         '/socket.io': {
           target: '127.0.0.1:9090',
@@ -29,7 +29,7 @@ module.exports = {
           changeOrigin: true
         },
         '/api': {
-          target: 'http://127.0.0.1:9090',
+          target: 'http://127.0.0.1:9501',
           ws: false,
           changeOrigin: true
         },

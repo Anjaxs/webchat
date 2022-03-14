@@ -3,7 +3,7 @@
     <div class="content">
       <form action="" name="form2">
         <div class="context-logo">
-          <img src="https://s3.qiufengh.com/webchat/webchat-logo-160.png" alt="">
+          <img src="../../assets/logo.png" alt="">
         </div>
         <Input v-model="username" type="text" placeholder="输入账号"/>
         <br/>
@@ -21,10 +21,10 @@
           <mu-flex justify-content="center">|</mu-flex>
           <mu-flex justify-content="center" fill><div class="tip-user">忘记密码</div></mu-flex>
         </mu-flex>
-        <div class="bottom-arguemnt">
+        <!-- <div class="bottom-arguemnt">
           登录即可代表同意协议
-        </div>
-        <p style="text-align: center"><a href="http://beian.miit.gov.cn" target="_blank">浙ICP备16040413号-1</a></p>
+        </div> -->
+        <!-- <p style="text-align: center"><a href="http://beian.miit.gov.cn" target="_blank">浙ICP备16040413号-1</a></p> -->
       </div>
 
     </div>
@@ -63,7 +63,7 @@ export default {
       const password = this.password.trim();
       if (name !== "" && password !== "") {
         const data = {
-          name: name,
+          email: name,
           password: password
         };
         let res;
@@ -76,15 +76,15 @@ export default {
         }
         if (res.status === "success") {
           Toast({
-            content: res.data.data,
+            content: '登录成功',
             timeout: 1000,
             background: "#2196f3"
           });
           const userInfo = {
-            userid: res.data.userInfo.name,
-            src: res.data.userInfo.src,
-            id: res.data.userInfo.id,
-            token: res.data.token,
+            userid: res.data.user.name,
+            src: res.data.user.avatar,
+            id: res.data.user.id,
+            token: res.data.user.api_token,
           }
           this.$store.commit("setUserInfo", userInfo);
           await handleInit({
@@ -96,7 +96,7 @@ export default {
           this.$router.push({ path: "/" });
         } else {
           Alert({
-            content: res.data.data
+            content: res.data.msg
           });
         }
       } else {
@@ -136,8 +136,7 @@ export default {
       justify-content: center;
       align-items: center;
       img {
-        width: 80px;
-        height: 80px;
+        height: 140px;
       }
     }
     .mu-input {

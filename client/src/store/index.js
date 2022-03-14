@@ -196,19 +196,19 @@ const store = new Vuex.Store({
   actions: {
     async getSearch({state, commit}, data) {
       const res = await url.getSearch(data);
-      if(res.data.errno === 0) {
+      if(res.status === 200) {
         commit('setSearchList', res.data.data)
       }
     },
     async getvipuser({state, commit}, data) {
       const res = await url.getvipuser(data);
-      if(res.data.errno === 0) {
+      if(res.status === 200) {
         commit('setvipUserList', res.data.data)
       }
     },
     async getHostUserList({state, commit}, data) {
       const res = await url.getHostUserList(data);
-      if(res.data.errno === 0) {
+      if(res.status === 200) {
         commit('sethotUserList', res.data.data)
       }
     },
@@ -224,7 +224,7 @@ const store = new Vuex.Store({
       try {
         const res = await url.postUploadFile(data);
         if (res) {
-          if (res.data.errno === 0) {
+          if (res.status === 200) {
             return {
               data: res.data.data,
               code: 0,
@@ -245,7 +245,7 @@ const store = new Vuex.Store({
     },
     async registerSubmit({}, data) {
       const res = await url.RegisterUser(data);
-      if (res.data.errno === 0) {
+      if (res.status === 200) {
         return {
           status: 'success',
           data: res.data
@@ -258,7 +258,7 @@ const store = new Vuex.Store({
     },
     async loginSubmit({}, data) {
       const res = await url.loginUser(data);
-      if (res.data.errno === 0) {
+      if (res.status === 200) {
         return {
           status: 'success',
           data: res.data
@@ -271,19 +271,19 @@ const store = new Vuex.Store({
     },
     async getUserInfo({state, commit}, data) {
       const res = await url.getUserInfo(data);
-      if(res.data.errno === 0) {
+      if(res.status === 200) {
         commit('setLookUserInfo', res.data.data);
       }
     },
     async postListFriend({state, commit}, data) {
       const res = await url.postListFriend(data);
-      if(res.data.errno === 0) {
+      if(res.status === 200) {
         commit('setFriendList', res.data.data);
       }
     },
     async getRoomHistory({state, commit}, data) {
       const res = await url.getRoomHistory(data);
-      if(res.data.errno === 0) {
+      if(res.status === 200) {
         const result = res.data.data;
         if(result) {
           commit('setAllmsg', result);
@@ -293,7 +293,7 @@ const store = new Vuex.Store({
     async getAllMessHistory({state, commit}, data) {
       try {
         const res = await url.RoomHistoryAll(data);
-        if (res.data.errno === 0) {
+        if (res.status === 200) {
           const result = res.data.data;
           if(data.msgid) {
             commit('setRoomDetailInfosBeforeNoRefresh', {

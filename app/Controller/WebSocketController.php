@@ -11,6 +11,7 @@ use Hyperf\Contract\OnMessageInterface;
 use Hyperf\Contract\OnOpenInterface;
 use Swoole\Http\Request;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Hyperf\Contract\StdoutLoggerInterface;
 use Swoole\Server;
 use Swoole\Websocket\Frame;
 use Swoole\WebSocket\Server as WebSocketServer;

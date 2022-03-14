@@ -10,17 +10,17 @@ use App\Support\Auth;
 use App\Support\Str;
 use App\Middleware\AuthMiddleware;
 use Hyperf\HttpServer\Annotation\Controller;
-use Hyperf\HttpServer\Annotation\RequestMapping;
+use Hyperf\HttpServer\Annotation\PostMapping;
 use Hyperf\HttpServer\Annotation\Middlewares;
 use Hyperf\HttpServer\Annotation\Middleware;
 
 /**
- * @Controller()
+ * @Controller(prefix="api/auth")
  */
 class AuthController extends AbstractController
 {
     /**
-     * @RequestMapping(path="register", method="post")
+     * @PostMapping(path="register")
      */
     public function register() 
     {
@@ -36,7 +36,7 @@ class AuthController extends AbstractController
     }
 
     /**
-     * @RequestMapping(path="login", method="post")
+     * @PostMapping(path="login")
      */
     public function login() 
     {
@@ -54,7 +54,7 @@ class AuthController extends AbstractController
     }
 
     /**
-     * @RequestMapping(path="logout", method="post")
+     * @PostMapping(path="logout")
      * @Middlewares({
      *     @Middleware(AuthMiddleware::class)
      * })
