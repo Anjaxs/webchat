@@ -30,11 +30,8 @@
         "hyperf/process": "~2.2.0",
         "hyperf/redis": "~2.2.0",
         "hyperf/validation": "^2.2",
-        "hyperf/view": "^2.2",
-        "hyperf/view-engine": "^2.2",
         "hyperf/websocket-server": "^2.2",
-        "nesbot/carbon": "^2.57",
-        "twig/twig": "^3.3"
+        "nesbot/carbon": "^2.57"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
