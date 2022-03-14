@@ -16,6 +16,7 @@ return [
     'app_name' => env('APP_NAME', 'skeleton'),
     'app_env' => env('APP_ENV', 'dev'),
     'scan_cacheable' => env('SCAN_CACHEABLE', false),
+    'timezone' => 'Asia/Shanghai',
     StdoutLoggerInterface::class => [
         'log_level' => [
             LogLevel::ALERT,

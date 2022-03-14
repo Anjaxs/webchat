@@ -21,4 +21,9 @@ $container = new Container((new DefinitionSourceFactory(true))());
 if (! $container instanceof \Psr\Container\ContainerInterface) {
     throw new RuntimeException('The dependency injection container is invalid.');
 }
-return ApplicationContext::setContainer($container);
+
+$app = ApplicationContext::setContainer($container);
+
+date_default_timezone_set(config('timezone'));
+
+return $app;
