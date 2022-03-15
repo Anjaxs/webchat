@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Toast from "@components/Toast";
 import Alert from "@components/Alert";
-import {getItem} from '@utils/localStorage';
+import {getItem, clear} from '@utils/localStorage';
 
 const baseURL = '';
 
@@ -35,6 +35,7 @@ instance.interceptors.response.use(response => {
       Alert({
         content: '请先登录'
       });
+      clear();
     } else if (error.response.status == 422) {
       // 业务逻辑错误
       Alert({

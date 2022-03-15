@@ -35,32 +35,10 @@ const store = new Vuex.Store({
       id: 1,
       username: ROBOT_NAME,
       src: ROBOT_URL,
-      msg: '如果微信群过期了,添加作者微信(添加时记得备注:项目交流)'
+      msg: '您好，请问有什么能帮助到您的？',
+      sessionId: '',
     },
-    {
-      id: 2,
-      username: ROBOT_NAME,
-      src: ROBOT_URL,
-      img: "https://s3.qiufengh.com/webchat/webcaht-my.jpeg"
-    },
-    {
-      id: 3,
-      username: ROBOT_NAME,
-      src: ROBOT_URL,
-      msg: '期待你的加入'
-    },
-    {
-      id: 4,
-      username: ROBOT_NAME,
-      src: ROBOT_URL,
-      img: "https://s3.qiufengh.com/webchat/webchat-group.jpeg"
-    },
-    {
-      id: 5,
-      username: ROBOT_NAME,
-      src: ROBOT_URL,
-      msg: '如果还有什么想知道的可以问我'
-    }],
+    ],
     unRead: {
       room1: 0,
       room2: 0
@@ -330,17 +308,10 @@ const store = new Vuex.Store({
       const src = ROBOT_URL;
       const res = await url.getRobotMessage(data);
       if (res) {
-        const robotdata = JSON.parse(res.data.data);
-        let msg = '';
-        // 分类信息
-        if (robotdata.code === 100000) {
-          msg = robotdata.text;
-        } else if (robotdata.code === 200000) {
-          msg = robotdata.text + robotdata.url;
-        } else {
-          msg = '暂不支持此类对话';
-        }
-        commit('setRobotMsg', {msg, username, src});
+        const msgs = res.data.result.messages || [];
+        const msg = msgs.length > 0 ? msgs[0].text.content : '';
+        const sessionId = res.data.result.sessionId || '';
+        commit('setRobotMsg', {msg, username, src, sessionId});
       }
     }
   }

@@ -26,9 +26,7 @@ const Service = {
     params: data
   }),
   // 机器人
-  getRobotMessage: data => Axios.get('/api/message/robotapi', {
-    params: data
-  }),
+  getRobotMessage: data => Axios.post('/api/chat/robot', data),
   // 上传图片
   postUploadFile: data => Axios.post('/api/file/uploadimg', data, {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}

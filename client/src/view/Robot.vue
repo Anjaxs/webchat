@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="chat-container">
       <div class="title">
         <mu-appbar color="primary">
           <mu-button icon slot="left" @click="goback">
@@ -71,11 +71,11 @@ export default {
         });
         return;
       }
-      const id = this.userid;
-      const data = {
-        info,
-        id
-      };
+      const data = {question: info};
+      const msglen = this.getRobotMsg.length;
+      if (msglen > 0 && this.getRobotMsg[msglen - 1].sessionId) {
+        data.session_id = this.getRobotMsg[msglen - 1].sessionId;
+      }
       this.$store.commit("setRobotMsg", {
         id: (+new Date()).toString(16),
         msg: info,
@@ -100,7 +100,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-.container {
+.chat-container {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -135,7 +135,7 @@ export default {
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    top: 56px;
+    top: 68px;
     bottom: 80px;
   }
 
@@ -145,26 +145,6 @@ export default {
     height: 50px;
     bottom: 0px;
     display: flex;
-
-    .input {
-      flex: 1;
-      background: #ddd;
-      padding: 4px;
-
-      input {
-        width: 100%;
-        height: 42px;
-        box-sizing: border-box;
-        border: 1px solid #ddd;
-        color: #333333;
-        font-size: 18px;
-        padding-left: 5px;
-      }
-
-      .mu-text-field {
-        width: 100%;
-      }
-    }
 
     .demo-raised-button {
       height: 50px;

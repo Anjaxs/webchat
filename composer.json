@@ -13,6 +13,8 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=7.3",
+        "alibabacloud/chatbot-20171011": "^2.0",
+        "alibabacloud/darabonba-openapi": "^0.2.5",
         "hyperf/cache": "~2.2.0",
         "hyperf/command": "~2.2.0",
         "hyperf/config": "~2.2.0",
@@ -21,7 +23,6 @@
         "hyperf/db-connection": "~2.2.0",
         "hyperf/event": "^2.2",
         "hyperf/framework": "~2.2.0",
-        "hyperf/guzzle": "~2.2.0",
         "hyperf/http-message": "^2.2",
         "hyperf/http-server": "~2.2.0",
         "hyperf/logger": "~2.2.0",
