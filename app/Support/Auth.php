@@ -47,7 +47,7 @@ class Auth
     public static function logout(RequestInterface $request)
     {
         $user = static::user($request);
-        $user->api_token = Str::random(60);
+        $user->api_token = '';
         $user->save();
     }
 

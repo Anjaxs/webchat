@@ -269,6 +269,16 @@ const store = new Vuex.Store({
         data: res.data
       };
     },
+    async logoutSubmit({state, commit}) {
+      const res = await url.logoutUser();
+      if (res.status === 200) {
+        commit("setUserInfo", {})
+        commit("setUnread", {
+          room1: 0,
+          room2: 0
+        })
+      }
+    },
     async getUserInfo({state, commit}, data) {
       const res = await url.getUserInfo(data);
       if(res.status === 200) {

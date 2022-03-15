@@ -26,13 +26,13 @@ class AuthController extends AbstractController
     {
         $request = $this->container->get(AuthRequest::class);
         $request->scene('register')->validateResolved();
-
-        return User::create([
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => md5($request->input('password')),
             'api_token' => Str::random(60)
         ]);
+        return $this->response->json(['user' => $user, 'success' => true]);
     }
 
     /**

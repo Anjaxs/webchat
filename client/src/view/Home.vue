@@ -9,12 +9,6 @@
           </mu-list-item-action>
           <mu-list-item-title>修改头像</mu-list-item-title>
         </mu-list-item>
-        <mu-list-item button :ripple="true" @click="handleTips">
-          <mu-list-item-action>
-            <mu-icon value="inbox"></mu-icon>
-          </mu-list-item-action>
-          <mu-list-item-title>赞助一下</mu-list-item-title>
-        </mu-list-item>
         <mu-list-item button :ripple="true" @click="handleGithub">
           <mu-list-item-action>
             <mu-icon value="grade"></mu-icon>
@@ -136,12 +130,8 @@ export default {
       });
       if (data === "submit") {
         socket.emit('roomout');
+        await this.$store.dispatch('logoutSubmit');
         clear();
-        this.$store.commit("setUserInfo", {});
-        this.$store.commit("setUnread", {
-          room1: 0,
-          room2: 0
-        });
         this.$router.push("/");
       }
     },
@@ -150,13 +140,6 @@ export default {
         content: "https://github.com/hua1995116/webchat"
       });
     },
-    handleTips() {
-      Alert({
-        title: "请我喝杯奶茶",
-        html:
-          '<div><img style="width: 200px" src="//s3.qiufengh.com/money/WechatIMG64.jpeg" /></div>'
-      });
-    }
   },
   computed: {
     ...mapState({

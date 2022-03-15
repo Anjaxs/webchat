@@ -5,7 +5,9 @@
         <div class="context-logo">
           <img src="../../assets/logo.png" alt="">
         </div>
-        <Input v-model="username" type="text" placeholder="输入账号"/>
+        <Input v-if="type=='register'" v-model="name" type="text" placeholder="输入用户名"/>
+        <br/>
+        <Input v-model="email" type="text" placeholder="输入邮箱"/>
         <br/>
         <Input v-model="password" type="password" placeholder="输入密码"/>
         <br/>
@@ -52,26 +54,30 @@ export default {
   data() {
     return {
       loading: "",
-      username: "",
+      name: "",
+      email: "",
       password: "",
       visibility: false
     };
   },
   methods: {
     async submit() {
-      const name = this.username.trim();
+      const email = this.email.trim();
       const password = this.password.trim();
-      if (name !== "" && password !== "") {
+      if (email !== "" && password !== "") {
         const data = {
-          email: name,
+          email: email,
           password: password
         };
         let res;
         if(this.type === 'login') {
           res = await this.$store.dispatch("loginSubmit", data);
         } else {
-          const src = `//s3.qiufengh.com/avatar/${Math.ceil(Math.random() * 272)}.jpeg`;
-          data.src = src;
+          data.name = this.name.trim()
+          if (!data.name) {
+            Alert({ content: "用户名不能为空"});
+            return;
+          }
           res = await this.$store.dispatch("registerSubmit", data);
         }
         if (res.status === "success") {
@@ -94,14 +100,10 @@ export default {
             roomList: ['room1', 'room2']
           })
           this.$router.push({ path: "/" });
-        } else {
-          Alert({
-            content: res.data.msg
-          });
         }
       } else {
         Alert({
-          content: "用户名和密码不能为空"
+          content: "邮箱和密码不能为空"
         });
       }
       this.password = '';

@@ -18,5 +18,5 @@ export async function handleInit({
     };
     socket.emit('room', obj);
   })
-  await store.dispatch('getRoomHistory', { selfId: id })
+  // await store.dispatch('getRoomHistory', { selfId: id })
 }

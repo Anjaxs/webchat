@@ -65,7 +65,7 @@ socket.on('reconnect', async (attemptNumber) => {
 
 
 socket.on('connect', async () => {
-  console.log('connect');
+  console.log('connect', socket.connected);
   const roomId = queryString(window.location.href, 'roomId');
   const userName = store.state.userInfo.userid;
   const src = store.state.userInfo.src;
@@ -149,8 +149,9 @@ socket.on('friend', (obj) => {
   store.commit('setFriendList', obj);
 })
 
+// 暂时不知道为啥要 setEmoji
 document.addEventListener('touchstart', (e) => {
-  if(!e.target.className) {
+  if(!e.target.className || e.target.className.length == undefined) {
     return;
   }
   if (e.target.className.indexOf('emoji') > -1 || e.target.parentNode.className.indexOf('emoji') > -1) {
@@ -161,6 +162,9 @@ document.addEventListener('touchstart', (e) => {
 });
 
 document.addEventListener('click', (e) => {
+  if(!e.target.className || e.target.className.length == undefined) {
+    return;
+  }
   if (e.target.className.indexOf('emoji') > -1 || e.target.parentNode.className.indexOf('emoji') > -1) {
     store.commit('setEmoji', true);
   } else {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Toast from "@components/Toast";
-import {setItem, getItem} from '@utils/localStorage';
+import Alert from "@components/Alert";
+import {getItem} from '@utils/localStorage';
 
 const baseURL = '';
 
@@ -27,18 +28,31 @@ instance.interceptors.response.use(response => {
   }
   return Promise.reject(response);
 }, error => {
-  if (error) {
-    let msg = '';
-    if (error.response && error.response.status === 401) {
-      msg = error.response.data.msg;
-      return;
+  console.log('api/axios.js:30, error.response');
+  console.log(error.response)
+  if (error && error.response) {
+    if (error.response.status == 401) {
+      Alert({
+        content: '请先登录'
+      });
+    } else if (error.response.status == 422) {
+      // 业务逻辑错误
+      Alert({
+        content: error.response.data.msg
+      });
+    } else if (error.response.status == 404) {
+      Toast({
+        content: '访问的页面不存在~',
+        timeout: 2000,
+        background: "#f44336"
+      });
+    } else {
+      Toast({
+        content: '网络异常，请检查你的网络。',
+        timeout: 2000,
+        background: "#f44336"
+      });
     }
-    msg = '网络异常，请检查你的网络。';
-    Toast({
-      content: msg,
-      timeout: 2000,
-      background: "#f44336"
-    });
   } else {
     Toast({
       content: '未知错误。',
