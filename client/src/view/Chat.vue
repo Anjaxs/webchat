@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="chat-container">
       <div class="title">
         <mu-appbar color="primary">
           <mu-button icon slot="left" @click="goback">
@@ -94,9 +94,6 @@
               </div>
             </div>
           </div>
-          <div class="fun-li" @click="handleTips">
-            <i class="icon iconfont icon-zanshang"></i>
-          </div>
           <div class="fun-li" @click="handleGithub">
             <i class="icon iconfont icon-wenti"></i>
           </div>
@@ -172,12 +169,12 @@
         // 防止未登录
         this.$router.push({path: '/login'});
       }
-      const res = await url.getNotice();
-      this.noticeList = res.data.noticeList;
-      if (res.data.version !== res.data.version) {
-        this.noticeBar = false;
-      }
-      this.noticeVersion = res.data.version;
+      // const res = await url.getNotice();
+      // this.noticeList = res.data.noticeList;
+      // if (res.data.version !== res.data.version) {
+      //   this.noticeBar = false;
+      // }
+      // this.noticeVersion = res.data.version;
     },
     async mounted() {
       loading.show({
@@ -254,16 +251,16 @@
           roomid: this.roomid
         };
         if(this.roomdetail[this.roomid] && this.roomdetail[this.roomid].length > 0) {
-          const id = this.roomdetail[this.roomid][0]._id;
+          const id = this.roomdetail[this.roomid][0].id;
           data.msgid = id;
         }
         try {
           const result = await this.$store.dispatch('getAllMessHistory', data);
-          if(!result.data.length) {
+          if(!result.length) {
             this.isEnd = true;
           }
         } catch(e) {
-
+          console.log('view/Chat.vue:getRoomMessage', e)
         }
       },
       handleNotice() {
@@ -278,13 +275,7 @@
       },
       handleGithub() {
         Alert({
-          content: 'https://github.com/hua1995116/webchat'
-        });
-      },
-      handleTips() {
-        Alert({
-          title: '请我喝杯奶茶',
-          html: '<div><img style="width: 150px" src="//s3.qiufengh.com/money/WechatIMG64.jpeg" /><br><img style="width: 150px" src="https://s3.qiufengh.com/webchat/wechat-pay.jpeg"></div>'
+          content: 'https://github.com/anjaxs/webchat'
         });
       },
       goback () {

@@ -135,7 +135,7 @@ export default {
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    top: 68px;
+    top: 72px;
     bottom: 80px;
   }
 

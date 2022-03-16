@@ -66,7 +66,7 @@ const store = new Vuex.Store({
     },
     setUnread(state, value) {
       for (let i in value) {
-        state.unRead[i] = +value[i];
+        state.unRead[i] = value[i];
       }
     },
     setLoginState(state, value) {
@@ -278,29 +278,30 @@ const store = new Vuex.Store({
         }
       }
     },
+    // 获取房间所有历史消息
     async getAllMessHistory({state, commit}, data) {
       try {
         const res = await url.RoomHistoryAll(data);
         if (res.status === 200) {
-          const result = res.data.data;
+          const list = res.data.list;
           if(data.msgid) {
             commit('setRoomDetailInfosBeforeNoRefresh', {
-              data: result.data,
+              data: list,
               roomid: data.roomid
             });
           } else {
             commit('setRoomDetailInfosBefore', {
-              data: result.data,
+              data: list,
               roomid: data.roomid
             });
           }
 
           return {
-            data: result.data
+            data: list
           }
         }
       } catch(e) {
-
+        console.log('store/index.js getAllMessHistory', e);
       }
     },
     async getRobatMess({commit}, data) {

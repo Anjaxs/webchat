@@ -11,7 +11,8 @@ const Service = {
   getRoomHistory: data => Axios.get('/api/message/history/byUser', {
     params: data
   }),
-  RoomHistoryAll: data => Axios.get('/api/message/v2/history', {
+  // 获取房间历史消息
+  RoomHistoryAll: data => Axios.get('/api/message/history', {
     params: data
   }),
   // 查询最火用户

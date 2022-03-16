@@ -41,7 +41,7 @@ export default {
 
     input {
       width: 100%;
-      height: 38px;
+      height: 37px;
       box-sizing: border-box;
       border: 1px solid #e8e7ea;
       border-radius: 3px;
