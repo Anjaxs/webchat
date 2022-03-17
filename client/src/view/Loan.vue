@@ -106,7 +106,7 @@ export default {
   async mounted() {
     // 只全局监听一次
     if(this.userInfo.id) {
-      this.$store.dispatch('postListFriend', {selfId: this.userInfo.id})
+      // this.$store.dispatch('postListFriend', {selfId: this.userInfo.id})
     }
   },
   methods: {

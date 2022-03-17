@@ -8,6 +8,11 @@ namespace App\Model;
 class User extends Model
 {
     /**
+     * 房间标识前缀
+     */
+    CONST ROOM_PREFIX = 'user_';
+
+    /**
      * The table associated with the model.
      *
      * @var string

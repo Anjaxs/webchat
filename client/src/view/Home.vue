@@ -129,7 +129,9 @@ export default {
         content: "你忍心离开吗？"
       });
       if (data === "submit") {
-        socket.emit('roomout');
+        ['room1', 'room2'].forEach(roomid => {
+          socket.emit('roomout', {roomid, id:this.userid});
+        })
         await this.$store.dispatch('logoutSubmit');
         clear();
         this.$router.push("/");

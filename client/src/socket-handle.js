@@ -1,6 +1,5 @@
 import env from '@utils/env';
 import socket from './socket';
-import store from './store';
 
 export async function handleInit({
   name,
@@ -12,6 +11,7 @@ export async function handleInit({
   socket.emit('login', {name, id, ...env});
   roomList.forEach(item => {
     const obj = {
+      id,
       name,
       src,
       roomid: item,
@@ -19,4 +19,12 @@ export async function handleInit({
     socket.emit('room', obj);
   })
   // await store.dispatch('getRoomHistory', { selfId: id })
+}
+
+// 读取房间未读消息
+export async function readMessages({
+  id,
+  roomid
+}) {
+  socket.emit('read_messages', {id, roomid});
 }

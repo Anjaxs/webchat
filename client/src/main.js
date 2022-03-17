@@ -59,7 +59,7 @@ socket.on('reconnect', async (attemptNumber) => {
   Toast({
     content: '又可以愉快地上网啦',
     timeout: 2000,
-    background: "#f44336"
+    background: "#67c23a"
   });
 });
 
@@ -133,16 +133,16 @@ socket.on('message', function (obj) {
 });
 
 socket.on('count', (obj) => {
-  console.log(obj);
+  console.log('socket event count',obj);
   store.commit("setUnread", obj);
 })
 
 socket.on('room', (obj) => {
-  console.log(obj);
+  console.log('socket event room', obj);
   store.commit('setUsers', obj);
 });
 socket.on('roomout', (obj) => {
-  console.log(obj);
+  console.log('socket event roomout', obj);
   store.commit('setUsers', obj);
 });
 socket.on('friend', (obj) => {

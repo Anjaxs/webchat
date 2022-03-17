@@ -15,6 +15,7 @@
         "php": ">=7.3",
         "alibabacloud/chatbot-20171011": "^2.0",
         "alibabacloud/darabonba-openapi": "^0.2.5",
+        "doctrine/dbal": "^3.3",
         "hyperf/cache": "~2.2.0",
         "hyperf/command": "~2.2.0",
         "hyperf/config": "~2.2.0",

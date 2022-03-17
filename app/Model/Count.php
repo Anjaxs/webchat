@@ -18,7 +18,7 @@ class Count extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['count', 'user_id', 'room_id'];
     /**
      * The attributes that should be cast to native types.
      *

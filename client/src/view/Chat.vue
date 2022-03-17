@@ -122,10 +122,9 @@
   import loading from '@components/loading/loading';
   import Alert from '@components/Alert';
   import debounce from 'lodash/debounce';
-  import url from '@api/server';
-  import { setTimeout } from 'timers';
   import ios from '@utils/ios';
   import { v4 as uuid } from 'uuid';
+  import { readMessages } from '../socket-handle';
 
   let isMore = false;
 
@@ -184,8 +183,6 @@
       // 微信 回弹 bug
       ios();
       this.container = document.querySelector('.chat-inner');
-      // socket内部，this指针指向问题
-      const that = this;
       this.isloading = true;
       if(!this.roomdetail[this.roomid]) {
         await this.getRoomMessage();
@@ -258,6 +255,10 @@
           const result = await this.$store.dispatch('getAllMessHistory', data);
           if(!result.length) {
             this.isEnd = true;
+          }
+          // 当前消息id没有，说明读取的是最新消息
+          if(!data.id) {
+            readMessages({id:this.userid, roomid:this.roomid})
           }
         } catch(e) {
           console.log('view/Chat.vue:getRoomMessage', e)
