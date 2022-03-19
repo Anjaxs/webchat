@@ -103,7 +103,6 @@ export default {
 .chat-container {
   width: 100%;
   height: 100%;
-  overflow: hidden;
   background: #f1f5f8;
 
   .title {

@@ -95,7 +95,7 @@ export default {
           this.$store.commit("setUserInfo", userInfo);
           await handleInit({
             name: userInfo.userid,
-            id: userInfo.id,
+            token: userInfo.token,
             src: userInfo.src,
             roomList: ['room1', 'room2']
           })

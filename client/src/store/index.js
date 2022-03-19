@@ -116,7 +116,9 @@ const store = new Vuex.Store({
       if(newClientId) {
         clientItem.clientId = newClientId;
       }
+      console.log('setRoomDetailStatus clientItem', clientItem);
     },
+    // 发送消息后，本地消息数组追加消息
     setRoomDetailInfosAfter(state, data) {
       const { roomid, msgs } = data;
       if(!state.roomdetail[roomid]) {
@@ -283,7 +285,7 @@ const store = new Vuex.Store({
       try {
         const res = await url.RoomHistoryAll(data);
         if (res.status === 200) {
-          const list = res.data.list;
+          const list = res.data.list.reverse();
           if(data.msgid) {
             commit('setRoomDetailInfosBeforeNoRefresh', {
               data: list,

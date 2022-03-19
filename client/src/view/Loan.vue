@@ -121,14 +121,14 @@ export default {
         return '暂无消息';
       }
       const lastMsg = roomData[roomData.length-1];
-      const { username, msg, img } = lastMsg;
+      const { user, msg, img } = lastMsg;
 
       if(img) {
-        return `${username}说: [图片]`;
+        return `${user.name}说: [图片]`;
       } else {
-        const content = `${username}说: ${msg}`;
+        const content = `${user.name}说: ${msg}`;
         if(content.length > 15) {
-          return `${username}说: ${msg.slice(0, 7)}...`;
+          return `${user.name}说: ${msg.slice(0, 7)}...`;
         }
         return content;
       }

@@ -25,8 +25,8 @@
           {{noticeBar ? '显示通知' : '关闭通知'}}
         </div>
       </div> -->
-      <div class="chat-inner" @scroll="bindScroll">
-        <div class="chat-container">
+      <div class="chat-inner">
+        <div class="chat-container" @scroll="bindScroll">
           <div v-if="(roomdetail[roomid] || []).length === 0" class="chat-no-people">暂无消息,赶紧来占个沙发～</div>
           <div v-if="(roomdetail[roomid] || []).length !== 0 && isloading" class="chat-loading">
             <div class="lds-css ng-scope">
@@ -42,18 +42,18 @@
             @avatarClick="handleInfo"
             @flexTouch="hadnleTouch"
             @retry="handleRetry"
-            :key="obj._id"
-            :is-self="obj.username === username"
-            :id="obj._id"
-            :name="obj.username"
-            :head="obj.src"
+            :key="obj.id"
+            :is-self="obj.user_id === userid"
+            :id="obj.id"
+            :name="obj.user.name"
+            :head="obj.user.avatar"
             :msg="obj.msg"
             :clientId="obj.clientId"
-            :roomid="obj.roomid"
+            :roomid="obj.room_id"
             :img="obj.img"
             :loading="obj.loading"
             :status="obj.status"
-            :mytime="obj.time"
+            :mytime="obj.created_at"
             :obj="obj"
             :container="container"
             :isLast="roomdetail[roomid].length - 1 === index"
@@ -114,7 +114,6 @@
 <script type="text/ecmascript-6" scoped>
   import {mapGetters, mapState} from 'vuex';
   import {inHTMLData} from 'xss-filters-es6';
-  import socket from '../socket';
   import emoji from '@utils/emoji';
   import {setItem, getItem} from '@utils/localStorage';
   import {queryString} from '@utils/queryString';
@@ -124,7 +123,7 @@
   import debounce from 'lodash/debounce';
   import ios from '@utils/ios';
   import { v4 as uuid } from 'uuid';
-  import { readMessages } from '../socket-handle';
+  import { readMessages, sendMessage } from '../socket-handle';
 
   let isMore = false;
 
@@ -182,7 +181,7 @@
       });
       // 微信 回弹 bug
       ios();
-      this.container = document.querySelector('.chat-inner');
+      this.container = document.querySelector('.chat-container');
       this.isloading = true;
       if(!this.roomdetail[this.roomid]) {
         await this.getRoomMessage();
@@ -208,7 +207,7 @@
           status: 'loading',
           typeList: ['status']
         })
-        socket.emit('message', {
+        sendMessage({
           ...obj,
           clientId,
           status: 'loading'
@@ -221,7 +220,8 @@
         this.chatValue = this.chatValue + data;
       },
       bindScroll: debounce(async function (e) {
-        if (e.target.scrollTop >= 0 && e.target.scrollTop < 150) {
+        console.log('bindScroll e.target.scrollTop', e.target.scrollTop);
+        if (e.target.scrollTop >= 0 && e.target.scrollTop < 100) {
           this.handleScroll();
         }
       }, 30),
@@ -253,12 +253,13 @@
         }
         try {
           const result = await this.$store.dispatch('getAllMessHistory', data);
-          if(!result.length) {
+          console.log('getAllMessHistory result', result);
+          if(!result.data.length) {
             this.isEnd = true;
           }
           // 当前消息id没有，说明读取的是最新消息
           if(!data.id) {
-            readMessages({id:this.userid, roomid:this.roomid})
+            readMessages({token:this.userInfo.token, roomid:this.roomid})
           }
         } catch(e) {
           console.log('view/Chat.vue:getRoomMessage', e)
@@ -303,7 +304,7 @@
                 img: `${fr.result}?width=${img.width}&height=${img.height}`,
                 msg: '',
                 roomType: that.roomType,
-                roomid: that.roomid,
+                room_id: that.roomid,
                 type: 'img',
                 time: new Date(),
                 to: that.to,
@@ -334,13 +335,13 @@
               }
               obj.img = `${imgurl.data}?width=${img.width}&height=${img.height}`;
 
-              socket.emit('message', obj);
+              sendMessage(obj);
             }
 
           };
           fr.readAsDataURL(file1);
           this.$nextTick(() => {
-            this.container.scrollTop = 10000;
+            this.container.scrollTop = this.container.scrollHeight;
           });
         } else {
           console.log('必须有文件');
@@ -362,18 +363,23 @@
           const msg = inHTMLData(this.chatValue); // 防止xss
 
           const obj = {
-            username: this.username,
-            src: this.src,
+            user: {
+              name: this.userInfo.userid,
+              id: this.userInfo.id,
+              avatar: this.userInfo.src,
+            },
             img: '',
             msg,
             to: this.to,
             from: this.from,
             roomType: this.roomType,
-            roomid: this.roomid,
-            time: new Date(),
+            room_id: this.roomid,
+            user_id: this.userInfo.id,
+            created_at: new Date(),
             type: 'text',
             clientId: uuid()
           };
+          console.log('send message obj:', obj);
           // 传递消息信息
           this.$store.commit('setRoomDetailInfosAfter', {
             roomid: this.roomid,
@@ -383,7 +389,7 @@
             }]
           });
 
-          socket.emit('message', obj);
+          sendMessage(obj)
           this.chatValue = '';
         } else {
           Alert({
@@ -402,6 +408,7 @@
         'roomUsers'
       ]),
       ...mapState({
+        userInfo: state => state.userInfo,
         token: state => state.userInfo.token,
         username: state => state.userInfo.userid,
         userid: state => state.userInfo.id,

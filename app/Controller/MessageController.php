@@ -43,12 +43,15 @@ class MessageController extends AbstractController
         }
         // 分页查询消息
         $messageData = Message::query()
+            ->with('user:id,name,avatar')
             ->where('room_id', $roomId)
-            ->where('id', '>', $current)
+            ->when($current, function ($query) use ($current) {
+                $query->where('id', '<', $current);
+            })
             ->take(20)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
-
+        
         return $this->response->json([
             'list' => $messageData,
             'success' => true,

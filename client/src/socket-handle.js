@@ -1,17 +1,19 @@
 import env from '@utils/env';
 import socket from './socket';
+import store from './store';
 
+// 登录，并进入房间
 export async function handleInit({
   name,
-  id,
+  token,
   src,
   roomList
 }) {
     // 此处逻辑需要抽离复用
-  socket.emit('login', {name, id, ...env});
+  socket.emit('login', {name, token, ...env});
   roomList.forEach(item => {
     const obj = {
-      id,
+      token,
       name,
       src,
       roomid: item,
@@ -23,8 +25,14 @@ export async function handleInit({
 
 // 读取房间未读消息
 export async function readMessages({
-  id,
+  token,
   roomid
 }) {
-  socket.emit('read_messages', {id, roomid});
+  socket.emit('read_messages', {token, roomid});
+}
+
+// 发送消息
+export async function sendMessage(obj) {
+  obj.token = store.state.userInfo.token;
+  socket.emit('message', obj)
 }

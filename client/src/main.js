@@ -76,7 +76,7 @@ socket.on('connect', async () => {
       socket,
       store,
       name: userName,
-      id: userId,
+      token: store.state.userInfo.token,
       src,
       env,
       roomList: ['room1', 'room2']
@@ -95,14 +95,15 @@ socket.on('disconnect', () => {
 });
 
 socket.on('message', function (obj) {
-  const userName = store.state.userInfo.userid;
-  const { roomid, username, img } = obj;
-  if(userName === username) {
+  console.log('socket event message', obj);
+  const userid = store.state.userInfo.id;
+  const { room_id, user, img } = obj;
+  if(userid === user.id) {
     if(img) {
       console.log('img', obj);
       store.commit('setRoomDetailStatus', {
         clientId: obj.clientId,
-        roomid: obj.roomid,
+        roomid: 'room' + room_id,
         status: 'finish',
         loading: 100,
         img: obj.img,
@@ -111,7 +112,7 @@ socket.on('message', function (obj) {
     } else {
       store.commit('setRoomDetailStatus', {
         clientId: obj.clientId,
-        roomid: obj.roomid,
+        roomid: 'room' + room_id,
         status: 'finish',
         typeList: ['status']
       })
@@ -119,7 +120,7 @@ socket.on('message', function (obj) {
 
   } else {
     store.commit('setRoomDetailInfosAfter', {
-      roomid,
+      roomid : 'room' + room_id,
       msgs: [{
         ...obj,
         status: 'finish',

@@ -72,7 +72,7 @@ class RoomService
             $onelineUsers = $this->updateOnlineUsers($roomId, $user, 0);
 
             $socket->in($roomName)->emit('roomout', ['roomid' => $roomName, 'onlineUsers' => $onelineUsers]);
-            $socket->emmit('roomout', ['roomid' => $roomName, 'onlineUsers' => $onelineUsers]);
+            $socket->emit('roomout', ['roomid' => $roomName, 'onlineUsers' => $onelineUsers]);
             $socket->leave($roomName);
         } else {
             $socket->emit('login', '登录后才能进入聊天室');

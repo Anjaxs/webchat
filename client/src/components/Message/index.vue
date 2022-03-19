@@ -171,6 +171,7 @@ export default {
     handleLoading() {
       setTimeout(() => {
         if(this.status === 'loading') {
+          console.log('3秒后消息状态变为错误 setRoomDetailStatus');
           this.$store.commit('setRoomDetailStatus', {
             clientId: this.clientId,
             roomid: this.roomid,
