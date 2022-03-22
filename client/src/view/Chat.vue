@@ -277,7 +277,7 @@
       },
       handleGithub() {
         Alert({
-          content: 'https://github.com/anjaxs/webchat'
+          content: 'https://github.com/Anjaxs/webchat'
         });
       },
       goback () {

@@ -139,7 +139,7 @@ export default {
     },
     handleGithub() {
       Alert({
-        content: "https://github.com/hua1995116/webchat"
+        content: "https://github.com/Anjaxs/webchat"
       });
     },
   },
