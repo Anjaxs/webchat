@@ -1,36 +1,92 @@
-# Introduction
+# webchat
 
-This is a skeleton application using the Hyperf framework. This application is meant to be used as a starting place for those looking to get their feet wet with Hyperf Framework.
+这个项目是一个在线聊天项目，前端代码来源 https://github.com/hua1995116/webchat ，后端采用 PHP 的 hyperf 框架。<a href="https://console-docs.apipost.cn/cover.html?url=e627c6ac66ea474a&salt=5a2e27226f174896">api 文档链接</a>
 
-# Requirements
 
-Hyperf has some requirements for the system environment, it can only run under Linux and Mac environment, but due to the development of Docker virtualization technology, Docker for Windows can also be used as the running environment under Windows.
+## 功能
 
-The various versions of Dockerfile have been prepared for you in the [hyperf/hyperf-docker](https://github.com/hyperf/hyperf-docker) project, or directly based on the already built [hyperf/hyperf](https://hub.docker.com/r/hyperf/hyperf) Image to run.
+- [x] 注册登录功能
+- [x] 聊天功能
+- [x] 查看历史记录
+- [x] 多个聊天室
+- [x] 与阿里机器人对接
+- [x] 图片发送
+- [x] 发送链接
+- [x] 发送表情
+- [x] 图片预览
+- [x] 消息未读
+- [x] 断线重连
+- [] 好友资料查看
+- [] 添加好友
+- [] 单聊
+- [] 搜索好友
+- [] 热门好友推荐
 
-When you don't want to use Docker as the basis for your running environment, you need to make sure that your operating environment meets the following requirements:  
 
- - PHP >= 7.3
- - Swoole PHP extension >= 4.5，and Disabled `Short Name`
- - OpenSSL PHP extension
- - JSON PHP extension
- - PDO PHP extension （If you need to use MySQL Client）
- - Redis PHP extension （If you need to use Redis Client）
- - Protobuf PHP extension （If you need to use gRPC Server of Client）
+## 服务器要求
 
-# Installation using Composer
+ - PHP >= 7.4
+- Swoole PHP 扩展 >= 4.5，并关闭了 `Short Name`
+ - JSON PHP 扩展
+ - Pcntl PHP 扩展
+ - OpenSSL PHP 扩展
+ - PDO PHP 扩展
+ - Redis PHP 扩展
 
-The easiest way to create a new Hyperf project is to use Composer. If you don't have it already installed, then please install as per the documentation.
+启动客户端
+```
+$webchat cd client
 
-To create your new Hyperf project:
+$client npm install -----安装依赖
 
-$ composer create-project hyperf/hyperf-skeleton path/to/install
+$client npm run serve -----运行
+```
+启动服务端
+```
+$webchat composer install
 
-Once installed, you can run the server immediately using the command below.
+$webchat php bin/hyperf.php migrate
 
-$ cd path/to/install
-$ php bin/hyperf.php start
+$webchat php bin/hyperf.php start
+```
 
-This will start the cli-server on port `9501`, and bind it to all network interfaces. You can then visit the site at `http://localhost:9501/`
+## 打包
 
-which will bring up Hyperf default home page.
+打包客户端
+```
+cd client
+
+npm run build
+```
+
+服务端运行
+```
+cd ..
+
+npm run prod
+```
+
+## 技术栈
+
+ - 前端 vue vue-router vuex
+ - 后端 hyperf
+ - 数据库 mysql redis
+ - 通讯 websocket
+
+## 效果
+
+<img src="docs/images/home.png"/>
+
+<img src="docs/images/me.png"/>
+
+<img src="docs/images/chat.png"/>
+
+<img src="docs/images/login.png"/>
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+MIT License
+
+Copyright (c) 2022 Anjaxs
