@@ -72,10 +72,10 @@
           formdata.append('username', getItem('userid'));
           const res = await this.$store.dispatch('uploadAvatar', formdata);
           loading.hide();
-          if (res.errno === 0) {
+          if (res.success) {
             this.$store.commit('setUserInfo', {
               type: 'src',
-              value: res.data.url
+              value: res.url
             });
             await Alert({
               content: '上传成功'
@@ -144,7 +144,6 @@
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .wrapper {
-    width: 375px;
     height: 375px;
     overflow: auto
   }

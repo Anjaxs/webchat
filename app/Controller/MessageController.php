@@ -4,17 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use AlibabaCloud\Credentials\Credential\Config;
-use AlibabaCloud\SDK\Chatbot\V20171011\Chatbot;
-use AlibabaCloud\SDK\Chatbot\V20171011\Models\ChatRequest;
 use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
-use App\Model\User;
-use App\Request\AuthRequest;
-use App\Support\Auth;
-use App\Support\Str;
 use App\Middleware\AuthMiddleware;
-use App\Model\Count;
 use App\Model\Message;
 use App\Model\Room;
 use Hyperf\HttpServer\Annotation\Controller;

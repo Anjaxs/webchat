@@ -127,10 +127,11 @@ class WebSocketController extends BaseNamespace
         if (!empty($data['token']) && $user = User::where('api_token', $data['token'])->first()) {
             // 获取消息内容
             $msg = $data['msg'];
+            $img = $data['img'];
             $roomId = intval(ltrim($data['room_id'], Room::ROOM_PREFIX));
             $roomName = Room::ROOM_PREFIX . $roomId;
             // 消息内容或房间号不能为空
-            if(empty($msg) || empty($roomId)) {
+            if((empty($msg) && empty($img)) || empty($roomId)) {
                 return;
             }
             // 将消息保存到数据库
@@ -138,7 +139,7 @@ class WebSocketController extends BaseNamespace
             $message->user_id = $user->id;
             $message->room_id = $roomId;
             $message->msg = $msg;
-            $message->img = ''; // 图片字段暂时留空
+            $message->img = $img;
             $message->created_at = Carbon::now()->toDateTimeString();
             $message->save();
             $message->load('user:id,name,avatar');

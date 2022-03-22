@@ -206,7 +206,7 @@ const store = new Vuex.Store({
         if (res) {
           if (res.status === 200) {
             return {
-              data: res.data.data,
+              data: res.data,
               code: 0,
             }
           } else {

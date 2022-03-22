@@ -299,17 +299,21 @@
             img.src = fr.result;
             img.onload = async function() {
               const obj = {
-                username: that.username,
-                src: that.src,
+                user: {
+                  name: that.userInfo.userid,
+                  id: that.userInfo.id,
+                  avatar: that.userInfo.src,
+                },
                 img: `${fr.result}?width=${img.width}&height=${img.height}`,
                 msg: '',
-                roomType: that.roomType,
-                room_id: that.roomid,
-                type: 'img',
-                time: new Date(),
                 to: that.to,
                 from: that.from,
-                clientId: uuid(),
+                roomType: that.roomType,
+                room_id: that.roomid,
+                user_id: that.userInfo.id,
+                created_at: new Date(),
+                type: 'img',
+                clientId: uuid()
               };
 
                // 传递消息信息
@@ -323,6 +327,7 @@
               });
 
               const imgurl = await that.$store.dispatch('uploadImg', formdata);
+              console.log(imgurl);
               if(imgurl.code == 500) {
                 Alert({
                   content: imgurl.data
@@ -333,7 +338,7 @@
                 })
                 return;
               }
-              obj.img = `${imgurl.data}?width=${img.width}&height=${img.height}`;
+              obj.img = `${imgurl.data.url}?width=${img.width}&height=${img.height}`;
 
               sendMessage(obj);
             }

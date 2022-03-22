@@ -6,16 +6,19 @@ namespace App\Support;
 
 use App\Model\User;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\Utils\Str;
 
 class Auth
 {
     /**
      * 获取登录用户
-     * @param RequestInterface $request
      * @return User
      */
-    public static function user(RequestInterface $request)
+    public static function user()
     {
+        $container = \Hyperf\Utils\ApplicationContext::getContainer();
+        $request = $container->get(RequestInterface::class);
+
         $token = $request->input('api_token');
 
         if (empty($token) && $header = $request->header('Authorization', '')) {
@@ -42,23 +45,21 @@ class Auth
 
     /**
      * 退出登录
-     * @param RequestInterface $request
      */
-    public static function logout(RequestInterface $request)
+    public static function logout()
     {
-        $user = static::user($request);
+        $user = static::user();
         $user->api_token = null;
         $user->save();
     }
 
     /**
      * 检查该请求是否有登录用户信息
-     * @param RequestInterface $request
      * @return bool
      */
-    public static function check(RequestInterface $request)
+    public static function check()
     {
-        $user = static::user($request);
+        $user = static::user();
         return !is_null($user);
     }
 }

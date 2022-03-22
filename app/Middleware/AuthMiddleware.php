@@ -39,7 +39,7 @@ class AuthMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (!Auth::check($this->request)) {
+        if (!Auth::check()) {
             return $this->response->json(['msg' => '请先登录'])->withStatus(401);
         }
         return $handler->handle($request);

@@ -35,7 +35,7 @@ class ChatController extends AbstractController
             'accessKeySecret' => config('ali_accesskey_secret'),
             'endpoint'        => 'chatbot.cn-shanghai.aliyuncs.com',
         ]));
-        $user = Auth::user($this->request);
+        $user = Auth::user();
         $data = [
             'instanceId' => config('ali_chatbot_id'),
             'senderNick' => $user->name,

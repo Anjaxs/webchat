@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Model\User;
 use App\Request\AuthRequest;
 use App\Support\Auth;
-use App\Support\Str;
+use Hyperf\Utils\Str;
 use App\Middleware\AuthMiddleware;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\PostMapping;
@@ -30,7 +30,7 @@ class AuthController extends AbstractController
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => md5($request->input('password')),
-            'api_token' => Str::random(60)
+            'api_token' => Str::random(60),
         ]);
         return $this->response->json(['user' => $user, 'success' => true]);
     }
@@ -61,7 +61,7 @@ class AuthController extends AbstractController
      */
     public function logout()
     {
-        Auth::logout($this->request);
+        Auth::logout();
 
         return $this->response->json(['success' => true]);
     }
